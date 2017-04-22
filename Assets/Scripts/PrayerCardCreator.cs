@@ -48,8 +48,9 @@ public class PrayerCardCreator : MonoBehaviour {
         newPos.y += Random.Range(-maxBuffer, maxBuffer);
         transform.position = newPos;
 
-        size.y += (sizePerButton * options.Length);
-        transform.sizeDelta = size;
+        Vector2 newSize = new Vector2(size.x, size.y);
+        newSize.y += (sizePerButton * options.Length);
+        transform.sizeDelta = newSize;
 
         newCard.gameObject.SetActive(true);
     }
