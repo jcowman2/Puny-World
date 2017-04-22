@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class PrayerCardCreator : MonoBehaviour {
@@ -13,28 +14,32 @@ public class PrayerCardCreator : MonoBehaviour {
 
     public Canvas parentCanvas;
     public PrayerCard templateCard;
+    public Button responseButton;
 
     public Vector3 position;
     public Vector2 size;
+    public float sizePerButton;
     public float maxBuffer;
 
     private Transform parentTransform;
 
     void Start () {
         parentTransform = parentCanvas.GetComponent<Transform>();
-
     }
 
     void CreateCard() {
-        Debug.Log("Creating Card");
+        Debug.Log("Creating Card: " + label);
 
         PrayerCard newCard = Instantiate(templateCard);
         newCard.label = label;
-        GameObject temp = (GameObject) Resources.Load("Characters/" + characterName);
-        newCard.character = temp.GetComponent<Character>();
         newCard.messageText = messageText;
         newCard.maxTimeBetweenFrames = 1;
+        newCard.responseButton = responseButton;
+        newCard.options = options;
 
+        GameObject temp = (GameObject) Resources.Load("Characters/" + characterName);
+        newCard.character = temp.GetComponent<Character>();
+        
         RectTransform transform = newCard.GetComponent<RectTransform>();
         transform.SetParent(parentTransform, false);
 
@@ -42,8 +47,10 @@ public class PrayerCardCreator : MonoBehaviour {
         newPos.x += Random.Range(-maxBuffer, maxBuffer);
         newPos.y += Random.Range(-maxBuffer, maxBuffer);
         transform.position = newPos;
-        
+
+        size.y += (sizePerButton * options.Length);
         transform.sizeDelta = size;
+
         newCard.gameObject.SetActive(true);
     }
 	

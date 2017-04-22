@@ -9,6 +9,9 @@ public class PrayerCard : MonoBehaviour {
     public Character character;
     public string messageText;
 
+    public Button responseButton;
+    public string[] options;
+
     public float minTimeBetweenFrames = 0;
     public float maxTimeBetweenFrames = 1;
 
@@ -41,6 +44,12 @@ public class PrayerCard : MonoBehaviour {
             character.age + "\n" + character.gender + "\n" + character.bio;
 
         message.GetComponent<Text>().text = messageText;
+
+        foreach (string response in options) {
+            Button responseBtn = Instantiate(responseButton);
+            responseBtn.GetComponent<RectTransform>().SetParent(responsePane);
+            responseBtn.gameObject.transform.GetChild(0).GetComponent<Text>().text = response;
+        }
 
         thisTime = 0;
         elapsedTime = 0;
