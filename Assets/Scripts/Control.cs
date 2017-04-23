@@ -50,7 +50,7 @@ public class Control : MonoBehaviour {
         }
         queuedNodes = queuedNodeList.ToArray();
 
-        StartCounter();
+        //StartCounter();
 	}
 
     public void StartCounter() {
