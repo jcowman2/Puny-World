@@ -18,6 +18,7 @@ public class Control : MonoBehaviour {
     private List<string> actionList;
 
 	void Start () {
+
         actionList = new List<string>();
         queuedNodeList = new List<PrayerNode>();
         activeNodeList = new List<PrayerNode>();
@@ -39,7 +40,11 @@ public class Control : MonoBehaviour {
             CreatePrayerCard(queuedNodeList[0]);
             queuedNodeList.RemoveAt(0);
             queuedNodes = queuedNodeList.ToArray();
-        }
+        } 
+        
+        /*else if (Input.GetKeyDown("tab")) {
+            AddNodeToQueue(rootNodes[Random.Range(0, rootNodes.Length)], 99);
+        }*/
     }
 
     public void OnButtonClick (string nodeLabel, int id) {
@@ -48,16 +53,40 @@ public class Control : MonoBehaviour {
         for (int i = 0; i < activeNodeList.Count; i++) {
             if (activeNodeList[i].label == nodeLabel) {
                 Debug.Log("match:" + nodeLabel);
+
                 PrayerNode matchedNode = activeNodeList[i];
+
                 activeNodeList.RemoveAt(i);
                 activePrayerCardList[i].Close();
                 activePrayerCardList.RemoveAt(i);
                 activeNodes = activeNodeList.ToArray();
-                //Call results here
+                
+                HandleResult(matchedNode.responseResults[id]);
                 return;
             }
         }
         
+    }
+
+    public void HandleResult(Result result) {
+        if (result.resultNode != null) {
+            AddNodeToQueue(result.resultNode, result.resultNodeDelay);
+        }
+
+        for (int n = 0; n < result.additionalNodes.Length; n++) {
+            AddNodeToQueue(result.additionalNodes[n], result.additionalNodeDelays[n]);
+        }
+
+
+    }
+
+    public void AddNodeToQueue(PrayerNode node, int delay) {
+        if (delay > queuedNodeList.Count) {
+            delay = queuedNodeList.Count;
+        }
+
+        queuedNodeList.Insert(delay, node);
+        queuedNodes = queuedNodeList.ToArray();
     }
 
     //Depreciated
@@ -93,6 +122,6 @@ public class Control : MonoBehaviour {
         activePrayerCardList.Add(prayerCardCreator.CreateCard(node.label, node.characterName, node.messageText, node.responseOptions));
         activeNodeList.Add(node);
         activeNodes = activeNodeList.ToArray();
-        Debug.Log("added to array: " + activeNodeList[activeNodeList.Count-1].label);
+        //Debug.Log("added to array: " + activeNodeList[activeNodeList.Count-1].label);
     }
 }
