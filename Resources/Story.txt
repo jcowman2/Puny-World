@@ -52,7 +52,7 @@
 	>Uh... sure
 	 ~ADD NODE: BirdTakeover (0)
 	 ~PrayersAnswered+1
-	 ~PeopleKilledIndirectly+2,347,000,000
+	 ~PeopleKilledIndirectly+2347000000
 	 ~REPORT: Sudden appearance of gigantic, fire-breathing 'super birds' causes worldwide cataclysm. Humanity on the brink of extinction.
 	 
 4)  BirdTakeover
@@ -60,12 +60,12 @@
 	I don't know where else to turn. Ungodly bird monsters have wiped out the government. Help us!!
 	>Ignore
 	 ~PrayersIgnored+1
-	 ~PeopleKilledIndirectly=7,500,000,000
+	 ~PeopleKilledIndirectly=7500000000
 	 ~GAMEOVER
 	 ~After weeks of brutal war, the last humans are incinerated by the flaming bird monsters that now roam the scorched planet.
 	>Smite
 	 ~PeopleSmote+1
-	 ~PeopleKilledIndirectly=7,500,000,000
+	 ~PeopleKilledIndirectly=7500000000
 	 ~GAMEOVER
 	 ~After weeks of brutal war, the last humans are incinerated by the flaming bird monsters that now roam the scorched planet.
 	>Save Humans
@@ -73,7 +73,7 @@
 	 ~REPORT: As quickly as they arrived, the super birds are gone. Survivors emerge from the rubble and begin the long process of rebuilding.
 	>Send more demon birds
 	 ~PrayersAnswered+1
-	 ~PeopleKilledIndirectly=7,500,000,000
+	 ~PeopleKilledIndirectly=7500000000
 	 ~GAMEOVER
 	 ~After weeks of brutal war, the last humans are incinerated by the flaming bird monsters that now roam the scorched planet.
 	 
@@ -88,7 +88,7 @@
 	>Bring birds back to life
 	 ~ADD NODE: ZombieBirds (0)
 	 ~PrayersAnswered+1
-	 ~PeopleKilledIndirectly+534,000,000
+	 ~PeopleKilledIndirectly+534000000
 	 ~REPORT: Further terror as birds return from the dead and wreak havoc.
 	>Turn Huck into a peacock
 	 ~PrayersAnswered+1
@@ -100,11 +100,11 @@
 	Ungodly zombie birds have returned from the dead and are infesting our streets! Help us!
 	>Ignore
 	 ~PrayersIgnored+1
-	 ~PeopleKilledIndirectly+90,000,000
+	 ~PeopleKilledIndirectly+90000000
 	 ~REPORT: Worst of birdpocalypse is over, experts say. Most zombie birds are destroyed. Multiple nuclear blasts leave millions dead.
 	>Smite
 	 ~PeopleSmote+1
-	 ~PeopleKilledIndirectly+850,000,000
+	 ~PeopleKilledIndirectly+850000000
 	 ~REPORT: Worst of birdpocalypse is over, experts say. Most zombie birds are destroyed. Multiple thermonuclear blasts leave almost a billion dead.
 	>Re-kill all the birds
 	 ~ADD NODE: PeacockFarmer (0)
@@ -113,6 +113,6 @@
 	 ~REPORT: Undead bird crisis ends mysteriously. Scientists advise public to avoid seemingly dead birds, in case they're faking.
 	>Make zombirds invincible
 	 ~PrayersAnswered+1
-	 ~PeopleKilledIndirectly=7,500,000,000
+	 ~PeopleKilledIndirectly=7500000000
 	 ~GAMEOVER
 	 ~After weeks of brutal war, the last humans are devoured by the ravenous zombirds that now claim the planet.

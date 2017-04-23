@@ -28,7 +28,7 @@ public class PrayerCardCreator : MonoBehaviour {
     }
 
     public void CreateCard(string newLabel, string newCharacterName, string newMessageText, string[] newOptions) {
-        Debug.Log("Creating Card: " + label);
+        Debug.Log("Creating Card: " + newLabel);
 
         PrayerCard newCard = Instantiate(templateCard);
         newCard.label = newLabel;
