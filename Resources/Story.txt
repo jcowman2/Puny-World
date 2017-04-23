@@ -82,7 +82,7 @@
 	It's horrible! All my birds are dead! How am I going to pay my bills?
 	>Ignore
 	 ~PrayersIgnored+1
-	 ~REPORT: Local farmer arrested in suspected bank robbery.
+	 ~REPORT: Local farmer arrested for selling dogs covered in peacock feathers, charged with fraud.
 	>Smite
 	 ~PeopleSmote+1
 	>Bring birds back to life
