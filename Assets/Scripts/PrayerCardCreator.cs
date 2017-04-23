@@ -27,7 +27,7 @@ public class PrayerCardCreator : MonoBehaviour {
         parentTransform = parentCanvas.GetComponent<Transform>();
     }
 
-    public void CreateCard(string newLabel, string newCharacterName, string newMessageText, string[] newOptions) {
+    public PrayerCard CreateCard(string newLabel, string newCharacterName, string newMessageText, string[] newOptions) {
         Debug.Log("Creating Card: " + newLabel);
 
         PrayerCard newCard = Instantiate(templateCard);
@@ -53,6 +53,7 @@ public class PrayerCardCreator : MonoBehaviour {
         transform.sizeDelta = newSize;
 
         newCard.gameObject.SetActive(true);
+        return newCard;
     }
 
     void CreateCard() {

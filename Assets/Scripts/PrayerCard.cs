@@ -75,4 +75,8 @@ public class PrayerCard : MonoBehaviour {
     void ChangePhoto() {
         id.sprite = character.animFrames[Random.Range(0, character.animFrames.Length)];
     }
+
+    public void Close() {
+        GameObject.Destroy(this.gameObject);
+    }
 }
