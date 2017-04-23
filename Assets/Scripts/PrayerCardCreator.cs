@@ -27,7 +27,7 @@ public class PrayerCardCreator : MonoBehaviour {
         parentTransform = parentCanvas.GetComponent<Transform>();
     }
 
-    void CreateCard(string newLabel, string newCharacterName, string newMessageText, string[] newOptions) {
+    public void CreateCard(string newLabel, string newCharacterName, string newMessageText, string[] newOptions) {
         Debug.Log("Creating Card: " + label);
 
         PrayerCard newCard = Instantiate(templateCard);

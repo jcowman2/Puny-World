@@ -5,14 +5,36 @@ using UnityEngine;
 
 public class Control : MonoBehaviour {
 
-    public List<string> actionList;
+    public PrayerCardCreator prayerCardCreator;
+
+    public PrayerNode[] rootNodes;
+    public PrayerNode[] queuedNodes;
+
+    private List<PrayerNode> queuedNodeList;
+
+    private List<string> actionList;
 
 	void Start () {
         actionList = new List<string>();
+        queuedNodeList = new List<PrayerNode>();
+
+        List<PrayerNode> rootNodeList = new List<PrayerNode>(rootNodes);
+
+        int nodesLength = rootNodeList.Count;
+        for (int i = 0; i < nodesLength; i++) {
+            int index = Random.Range(0, rootNodeList.Count);
+            queuedNodeList.Add(rootNodeList[index]);
+            rootNodeList.RemoveAt(index);
+        }
+        queuedNodes = queuedNodeList.ToArray();
 	}
 	
 	void Update () {
-		
+		if (Input.GetKeyDown("space") && queuedNodeList.Count > 0) {
+            CreatePrayerCard(queuedNodeList[0]);
+            queuedNodeList.RemoveAt(0);
+            queuedNodes = queuedNodeList.ToArray();
+        }
 	}
 
     public void PostAction (GameObject btn) {
@@ -33,5 +55,9 @@ public class Control : MonoBehaviour {
         Debug.Log(outputCode);
         actionList.Add(outputCode);
 
+    }
+
+    public void CreatePrayerCard(PrayerNode node) {
+        prayerCardCreator.CreateCard(node.label, node.characterName, node.messageText, node.responseOptions);
     }
 }
