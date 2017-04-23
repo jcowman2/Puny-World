@@ -18,7 +18,7 @@
    >Kill all birds
 	 ~ADD NODE: PeacockFarmer (0)
 	 ~PrayersAnswered+1
-	 ~BirdsSmote+300,000,000
+	 ~BirdsSmote+300000000
 	 ~REPORT: Global chaos as millions of birds drop dead within hours. Economic collapse seems imminent.
 	 
 2)  BirdMarriage
@@ -55,7 +55,7 @@
 	 ~PeopleKilledIndirectly+2,347,000,000
 	 ~REPORT: Sudden appearance of gigantic, fire-breathing 'super birds' causes worldwide cataclysm. Humanity on the brink of extinction.
 	 
-5)  BirdTakeover
+4)  BirdTakeover
 	General Tso
 	I don't know where else to turn. Ungodly bird monsters have wiped out the government. Help us!!
 	>Ignore
@@ -77,7 +77,7 @@
 	 ~GAMEOVER
 	 ~After weeks of brutal war, the last humans are incinerated by the flaming bird monsters that now roam the scorched planet.
 	 
-6)  PeacockFarmer
+5)  PeacockFarmer
 	Huck Wallace
 	It's horrible! All my birds are dead! How am I going to pay my bills?
 	>Ignore
@@ -95,7 +95,7 @@
 	 ~PeopleKilledIndirectly+1
 	 ~REPORT: Single surviving peacock found in missing farmer's house. Decision made to ceremonially sacrifice bird in hopes of appeasing higher being.
 	 
-7)	ZombieBirds
+6)	ZombieBirds
 	General Tso
 	Ungodly zombie birds have returned from the dead and are infesting our streets! Help us!
 	>Ignore
