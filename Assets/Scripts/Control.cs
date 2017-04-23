@@ -9,14 +9,17 @@ public class Control : MonoBehaviour {
 
     public PrayerNode[] rootNodes;
     public PrayerNode[] queuedNodes;
+    public PrayerNode[] activeNodes;
 
     private List<PrayerNode> queuedNodeList;
+    private List<PrayerNode> activeNodeList;
 
     private List<string> actionList;
 
 	void Start () {
         actionList = new List<string>();
         queuedNodeList = new List<PrayerNode>();
+        activeNodeList = new List<PrayerNode>();
 
         List<PrayerNode> rootNodeList = new List<PrayerNode>(rootNodes);
 
@@ -35,11 +38,23 @@ public class Control : MonoBehaviour {
             queuedNodeList.RemoveAt(0);
             queuedNodes = queuedNodeList.ToArray();
         }
-	}
+    }
+
+    public void OnButtonClick (string nodeLabel, int id) {
+        Debug.Log("CLICK HEARD:" + nodeLabel + id);
+    }
 
     public void PostAction (GameObject btn) {
 
         string label = btn.GetComponentInParent<PrayerCard>().label;
+        PrayerNode currentNode;
+
+        Debug.Log("at least made it here: " + activeNodeList.Count);
+        foreach (PrayerNode node in activeNodeList) {
+            Debug.Log("TEST");
+        }
+
+        
         string outputCode = label + "_";
 
         if (btn.CompareTag("Response")) {
@@ -59,5 +74,8 @@ public class Control : MonoBehaviour {
 
     public void CreatePrayerCard(PrayerNode node) {
         prayerCardCreator.CreateCard(node.label, node.characterName, node.messageText, node.responseOptions);
+        activeNodeList.Add(node);
+        //activeNodes = activeNodeList.ToArray();
+        Debug.Log("added to array: " + activeNodeList[activeNodeList.Count-1].label);
     }
 }

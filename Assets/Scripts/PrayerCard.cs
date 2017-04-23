@@ -45,10 +45,16 @@ public class PrayerCard : MonoBehaviour {
 
         message.GetComponent<Text>().text = messageText;
 
+        int optionId = 2; //0 - ignore, 1 - smite
         foreach (string response in options) {
             Button responseBtn = Instantiate(responseButton);
             responseBtn.GetComponent<RectTransform>().SetParent(responsePane);
             responseBtn.gameObject.transform.GetChild(0).GetComponent<Text>().text = response;
+
+            ControlLinkedButton cntrl = responseBtn.GetComponent<ControlLinkedButton>();
+            cntrl.cardLabel = label;
+            cntrl.id = optionId;
+            optionId++;
         }
 
         thisTime = 0;
