@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -14,37 +15,75 @@ public class Control : MonoBehaviour {
     private List<PrayerNode> queuedNodeList;
     private List<PrayerNode> activeNodeList;
     private List<PrayerCard> activePrayerCardList;
-
+    private List<string> newsList;
+    private Dictionary<string, double> statDictionary;
+    
     private List<string> actionList;
+
+    //public float minTimeActive, maxTimeActive; ADD LATER (multiple prayers at once)
+    public float minTimeWaiting, maxTimeWaiting;
+
+    private bool isWaiting = false;
+    public float thisTime = 0;
+    public float elapsedTime = 0;
+
+    private string DEFAULT_MESSAGE = "Congratulations! You didn't destroy the world.";
 
 	void Start () {
 
-        actionList = new List<string>();
         queuedNodeList = new List<PrayerNode>();
         activeNodeList = new List<PrayerNode>();
         activePrayerCardList = new List<PrayerCard>();
+        newsList = new List<string>();
+
+        statDictionary = new Dictionary<string, double>();
+
+        actionList = new List<string>();
 
         List<PrayerNode> rootNodeList = new List<PrayerNode>(rootNodes);
 
         int nodesLength = rootNodeList.Count;
         for (int i = 0; i < nodesLength; i++) {
-            int index = Random.Range(0, rootNodeList.Count);
+            int index = UnityEngine.Random.Range(0, rootNodeList.Count);
             queuedNodeList.Add(rootNodeList[index]);
             rootNodeList.RemoveAt(index);
         }
         queuedNodes = queuedNodeList.ToArray();
+
+        StartCounter();
 	}
+
+    public void StartCounter() {
+        thisTime = UnityEngine.Random.Range(minTimeWaiting, maxTimeWaiting);
+        elapsedTime = 0;
+        isWaiting = true;
+    }
 	
 	void Update () {
-		if (Input.GetKeyDown("space") && queuedNodeList.Count > 0) {
+		/*if (Input.GetKeyDown("space") && queuedNodeList.Count > 0) {
             CreatePrayerCard(queuedNodeList[0]);
             queuedNodeList.RemoveAt(0);
             queuedNodes = queuedNodeList.ToArray();
-        } 
-        
+        }*/
+
         /*else if (Input.GetKeyDown("tab")) {
             AddNodeToQueue(rootNodes[Random.Range(0, rootNodes.Length)], 99);
         }*/
+
+        if (isWaiting) {
+            elapsedTime += Time.deltaTime;
+
+            if (elapsedTime >= thisTime) {
+                isWaiting = false;
+                if (queuedNodeList.Count > 0) {
+                    CreatePrayerCard(queuedNodeList[0]);
+                    queuedNodeList.RemoveAt(0);
+                    queuedNodes = queuedNodeList.ToArray();
+                } else {
+                    DoGameOver(DEFAULT_MESSAGE);
+                }
+            }
+        }
     }
 
     public void OnButtonClick (string nodeLabel, int id) {
@@ -69,6 +108,7 @@ public class Control : MonoBehaviour {
     }
 
     public void HandleResult(Result result) {
+
         if (result.resultNode != null) {
             AddNodeToQueue(result.resultNode, result.resultNodeDelay);
         }
@@ -77,7 +117,82 @@ public class Control : MonoBehaviour {
             AddNodeToQueue(result.additionalNodes[n], result.additionalNodeDelays[n]);
         }
 
+        if (result.statFormat.Length > 0) {
+            UpdateStats(result.statFormat);
+        }
 
+        if (result.news.Length > 0) {
+            string[] newsSplit = result.news.Split(';');
+            
+            if (newsSplit.Length > 1) {
+                Array.Reverse(newsSplit);
+                foreach (string s in newsSplit) {
+                    newsList.Insert(0, s);
+                }
+
+            } else {
+                newsList.Insert(0, newsSplit[0]);
+            }
+
+        }
+
+        if (result.gameOver) {
+            DoGameOver(result.gameOverMessage);
+        } else {
+            isWaiting = true;
+        }
+
+    }
+
+    public void UpdateStats(string statFormat) {
+        string[] stats = statFormat.Split(';');
+        string[] splitStat;
+        string statName = "";
+        double statDouble = 0;
+
+        foreach (string stat in stats) {
+            if (stat.Contains("+")) {
+                splitStat = stat.Split('+');
+                statName = splitStat[0];
+                statDouble = double.Parse(splitStat[1]);
+
+                if (statDictionary.ContainsKey(statName)) {
+                    statDictionary[statName] = statDictionary[statName] + statDouble;
+                } else {
+                    statDictionary.Add(statName, statDouble);
+                }
+
+            } else if (stat.Contains("-")) {
+                splitStat = stat.Split('-');
+                statName = splitStat[0];
+                statDouble = double.Parse(splitStat[1]);
+
+                if (statDictionary.ContainsKey(statName)) {
+                    statDictionary[statName] = statDictionary[statName] - statDouble;
+                } else {
+                    statDictionary.Add(statName, statDouble);
+                }
+
+            } else if (stat.Contains("=")) {
+                splitStat = stat.Split('=');
+                statName = splitStat[0];
+                statDouble = double.Parse(splitStat[1]);
+
+                if (statDictionary.ContainsKey(statName)) {
+                    statDictionary[statName] = statDouble;
+                } else {
+                    statDictionary.Add(statName, statDouble);
+                }
+            }
+
+            Debug.Log(statName + ":" + statDictionary[statName]);
+            thisTime = UnityEngine.Random.Range(minTimeWaiting, maxTimeWaiting);
+            elapsedTime = 0;
+        }
+    }
+
+    public void DoGameOver(string message) {
+        Debug.Log("GAME OVER:" + message);
     }
 
     public void AddNodeToQueue(PrayerNode node, int delay) {
