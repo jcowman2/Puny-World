@@ -27,19 +27,19 @@ public class PrayerCardCreator : MonoBehaviour {
         parentTransform = parentCanvas.GetComponent<Transform>();
     }
 
-    void CreateCard() {
+    void CreateCard(string newLabel, string newCharacterName, string newMessageText, string[] newOptions) {
         Debug.Log("Creating Card: " + label);
 
         PrayerCard newCard = Instantiate(templateCard);
-        newCard.label = label;
-        newCard.messageText = messageText;
+        newCard.label = newLabel;
+        newCard.messageText = newMessageText;
         newCard.maxTimeBetweenFrames = 1;
         newCard.responseButton = responseButton;
-        newCard.options = options;
+        newCard.options = newOptions;
 
-        GameObject temp = (GameObject) Resources.Load("Characters/" + characterName);
+        GameObject temp = (GameObject)Resources.Load("Characters/" + newCharacterName);
         newCard.character = temp.GetComponent<Character>();
-        
+
         RectTransform transform = newCard.GetComponent<RectTransform>();
         transform.SetParent(parentTransform, false);
 
@@ -49,10 +49,15 @@ public class PrayerCardCreator : MonoBehaviour {
         transform.position = newPos;
 
         Vector2 newSize = new Vector2(size.x, size.y);
-        newSize.y += (sizePerButton * options.Length);
+        newSize.y += (sizePerButton * newOptions.Length);
         transform.sizeDelta = newSize;
 
         newCard.gameObject.SetActive(true);
+    }
+
+    void CreateCard() {
+        Debug.Log("Called editor constructor.");
+        this.CreateCard(label, characterName, messageText, options);
     }
 	
 	void Update () {
