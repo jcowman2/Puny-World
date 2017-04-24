@@ -13,6 +13,8 @@ public class Control : MonoBehaviour {
     public Text gameOverResultText;
     public GameObject statPanel;
 
+    public NewsreelSpawner newsSpawner;
+
     public PrayerNode[] rootNodes;
     public PrayerNode[] queuedNodes;
     public PrayerNode[] activeNodes;
@@ -57,6 +59,8 @@ public class Control : MonoBehaviour {
             rootNodeList.RemoveAt(index);
         }
         queuedNodes = queuedNodeList.ToArray();
+
+        newsSpawner.ClearTicker();
         
     }
 
@@ -139,6 +143,7 @@ public class Control : MonoBehaviour {
 
             } else {
                 newsList.Insert(0, newsSplit[0]);
+                newsSpawner.ChangeTicker(newsSplit[0]);
             }
 
         }
