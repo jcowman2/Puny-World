@@ -8,6 +8,11 @@ public class Control : MonoBehaviour {
 
     public PrayerCardCreator prayerCardCreator;
 
+    public GameObject gameOverScreen;
+    public GameObject statTextPrefab;
+    public Text gameOverResultText;
+    public GameObject statPanel;
+
     public PrayerNode[] rootNodes;
     public PrayerNode[] queuedNodes;
     public PrayerNode[] activeNodes;
@@ -27,19 +32,22 @@ public class Control : MonoBehaviour {
     public float thisTime = 0;
     public float elapsedTime = 0;
 
-    private string DEFAULT_MESSAGE = "Congratulations! You didn't destroy the world.";
+    private string DEFAULT_MESSAGE = "Congratulations! You didn't destroy the world!";
 
-	void Start () {
+    void Start () {
+
+        StartGame();
+	}
+
+    public void StartGame() {
 
         queuedNodeList = new List<PrayerNode>();
         activeNodeList = new List<PrayerNode>();
         activePrayerCardList = new List<PrayerCard>();
         newsList = new List<string>();
-
-        statDictionary = new Dictionary<string, double>();
-
         actionList = new List<string>();
-
+        statDictionary = new Dictionary<string, double>();
+       
         List<PrayerNode> rootNodeList = new List<PrayerNode>(rootNodes);
 
         int nodesLength = rootNodeList.Count;
@@ -49,9 +57,8 @@ public class Control : MonoBehaviour {
             rootNodeList.RemoveAt(index);
         }
         queuedNodes = queuedNodeList.ToArray();
-
-        //StartCounter();
-	}
+        
+    }
 
     public void StartCounter() {
         thisTime = UnityEngine.Random.Range(minTimeWaiting, maxTimeWaiting);
@@ -193,6 +200,21 @@ public class Control : MonoBehaviour {
 
     public void DoGameOver(string message) {
         Debug.Log("GAME OVER:" + message);
+        //GameObject.FindWithTag("EndGameText").GetComponent<Text>().text = message; //yum
+
+        gameOverResultText.text = message;
+
+        foreach (Transform child in statPanel.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        foreach (string key in statDictionary.Keys) {
+            GameObject temp = Instantiate(statTextPrefab);
+            temp.GetComponent<Text>().text = key + ": " + statDictionary[key];
+            temp.transform.SetParent(statPanel.transform);
+        }
+
+        gameOverScreen.gameObject.SetActive(true);
     }
 
     public void AddNodeToQueue(PrayerNode node, int delay) {
