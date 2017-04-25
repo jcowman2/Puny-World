@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class NewsreelSpawner : MonoBehaviour {
 
     public GameObject tickerPrefab;
+    public float tickerSpeed;
 
     private GameObject currentTicker;
 
@@ -18,6 +19,8 @@ public class NewsreelSpawner : MonoBehaviour {
         currentTicker.transform.parent = transform;
         currentTicker.transform.position = transform.position;
         currentTicker.GetComponent<Text>().text = message;
+        currentTicker.GetComponent<ScrollingTicker>().speed = tickerSpeed;
+
     }
 
 	public void ClearTicker() {
