@@ -215,7 +215,7 @@ public class Control : MonoBehaviour {
 
         foreach (string key in statDictionary.Keys) {
             GameObject temp = Instantiate(statTextPrefab);
-            temp.GetComponent<Text>().text = key + ": " + statDictionary[key];
+            temp.GetComponent<Text>().text = TextUtils.SeparateCamelCase(key) + ": " + TextUtils.PutCommasInNumber(statDictionary[key].ToString());
             temp.transform.SetParent(statPanel.transform);
         }
 
